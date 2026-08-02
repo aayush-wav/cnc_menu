@@ -262,6 +262,78 @@
       background: var(--line);
     }
 
+    /* ===== DRINKS SECTION HEADER (mini-hero, echoes main hero) ===== */
+    .drinks-head {
+      text-align: center;
+      padding: 28px 20px 22px;
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      margin: 20px 28px 0;
+    }
+
+    @media(max-width:560px) {
+      .drinks-head {
+        margin: 20px 14px 0;
+        padding: 22px 14px 18px;
+      }
+    }
+
+    .drinks-head .top-text {
+      font-family: 'Special Elite', monospace;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-size: 9.5px;
+      margin-bottom: 4px;
+    }
+
+    .drinks-head h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(32px, 8.5vw, 52px);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin: 0;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+
+    .drinks-head .sub-script {
+      font-family: 'Rye', serif;
+      font-size: clamp(16px, 5vw, 24px);
+      color: var(--ink);
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+      text-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .drinks-head .tagline-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--ink);
+      padding: 3px 12px;
+      margin-top: 10px;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .drinks-head .tagline-box span {
+      font-family: 'Special Elite', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .drinks-head .mini-vinyl {
+      display: block;
+      margin: 10px auto 0;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--ink) 2.4px, transparent 2.4px, transparent 3.8px, var(--ink-mid) 3.8px, var(--ink-mid) 4.6px, transparent 4.6px);
+    }
+
     .subcat {
       font-family: 'Special Elite', monospace;
       font-size: 9.5px;
@@ -689,7 +761,7 @@
   <div class="frame">
 
     <header class="r-hero">
-      <a href="index.html" class="back-link">Back to Menu</a>
+      <a href="cassette-and-chiya-menu.html" class="back-link">Back to Menu</a>
       <svg class="logo-stencil" style="color:var(--ink);">
         <use href="#logo" />
       </svg>
@@ -776,6 +848,14 @@
       { id: "rewind", title: "Rewind", sub: "Sandwiches & Rice Bowls", items: [{ name: "Chicken Rice Bowl" }, { name: "Veg Rice Bowl" }, { name: "Grilled Chicken Sandwich" }, { name: "Veg Sandwich" }] },
       { id: "mixtape", title: "Mixtape Snacks", sub: "Sadeko", items: [{ name: "Chicken Sandheko" }, { name: "Wai Wai Sandheko" }, { name: "Peanuts Sandheko" }, { name: "Mixed Sandheko" }] },
       { id: "smoke-signals", title: "Smoke Signals", sub: "Hookah", items: [{ name: "Classic Hookah" }, { name: "Cloud Hookah" }, { name: "Cloud Hookah (Iced)" }] },
+      { id: "cassette-classics", title: "Cassette Classics", sub: "Tea", drinksHeader: { eyebrow: "Now Pouring", tagline: "Good Drinks. Good Times." }, items: [{ name: "Masala Milk Tea" }, { name: "Classic Black Tea" }, { name: "Classic Lemon Tea" }] },
+      { id: "cassette-coffee", title: "Cassette Coffee", sub: "Coffee", items: [{ name: "Classic Milk Coffee" }, { name: "Classic Black Coffee" }] },
+      { id: "refreshers", title: "Refreshers", sub: "Cold & Fruity", items: [{ name: "Virgin Mojito" }, { name: "Strawberry Lemonade" }, { name: "Mint Lemonade" }] },
+      { id: "milkshakes", title: "Milkshakes", sub: "Thick & Creamy", items: [{ name: "Vanilla Milkshake" }, { name: "Chocolate Milkshake" }, { name: "Strawberry Milkshake" }, { name: "Oreo Milkshake" }] },
+      { id: "lassi", title: "Lassi", sub: "Traditional Yogurt Drinks", items: [{ name: "Plain Lassi" }, { name: "Banana Lassi" }] },
+      { id: "hot-drinks", title: "Hot Drinks", sub: "Warm & Comforting", items: [{ name: "Hot Lemon with Honey" }, { name: "Hot Chocolate" }] },
+      { id: "iced-tea", title: "Iced Tea", sub: "Chilled", items: [{ name: "Peach Iced Tea" }, { name: "Apple Iced Tea" }, { name: "Lemon Iced Tea" }] },
+      { id: "iced-coffee", title: "Iced Coffee", sub: "Chilled", items: [{ name: "Iced Americano" }, { name: "Iced Latte" }] },
     ];
 
     /* Paste the Web app URL from your Apps Script deployment here (ends in /exec) */

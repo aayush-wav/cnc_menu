@@ -199,6 +199,78 @@
       background: radial-gradient(circle, var(--ink) 3.5px, transparent 3.5px, transparent 5.5px, var(--ink-mid) 5.5px, var(--ink-mid) 6.5px, transparent 6.5px);
     }
 
+    /* ===== DRINKS SECTION HEADER (mini-hero, echoes main hero) ===== */
+    .drinks-head {
+      text-align: center;
+      padding: 30px 20px 24px;
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      margin: 22px 28px 0;
+    }
+
+    @media(max-width:560px) {
+      .drinks-head {
+        margin: 22px 14px 0;
+        padding: 24px 16px 20px;
+      }
+    }
+
+    .drinks-head .top-text {
+      font-family: 'Special Elite', monospace;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    .drinks-head h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 10vw, 64px);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      margin: 0;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+
+    .drinks-head .sub-script {
+      font-family: 'Rye', serif;
+      font-size: clamp(18px, 5.5vw, 30px);
+      color: var(--ink);
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+      text-shadow: 1.5px 1.5px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .drinks-head .tagline-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--ink);
+      padding: 3px 14px;
+      margin-top: 12px;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .drinks-head .tagline-box span {
+      font-family: 'Special Elite', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .drinks-head .mini-vinyl {
+      display: block;
+      margin: 12px auto 0;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--ink) 2.6px, transparent 2.6px, transparent 4.2px, var(--ink-mid) 4.2px, var(--ink-mid) 5px, transparent 5px);
+    }
+
     /* ===== BAR DIVIDER ===== */
     .bar-div {
       display: flex;
@@ -774,6 +846,51 @@
           { name: "Cloud Hookah (Iced)", price: "600", tags: [], desc: "Our Cloud blend, chilled for an extra-cool finish." },
           { name: "Extra Coil", price: "50", tags: [], desc: "An additional coil to keep the session going." }]
       },
+      {
+        id: "cassette-classics", title: "Cassette Classics", sub: "Tea", drinksHeader: { eyebrow: "Now Pouring", tagline: "Good Drinks. Good Times." }, items: [
+          { name: "Masala Milk Tea", price: "35", tags: ["D"], desc: "Creamy milk tea brewed with aromatic spices for a warm, comforting classic." },
+          { name: "Classic Black Tea", price: "25", tags: [], desc: "A simple, refreshing cup of perfectly brewed black tea." },
+          { name: "Classic Lemon Tea", price: "35", tags: [], desc: "Refreshing black tea brightened with a splash of zesty lemon." }]
+      },
+      {
+        id: "cassette-coffee", title: "Cassette Coffee", sub: "Coffee", items: [
+          { name: "Classic Milk Coffee", price: "130", tags: ["D"], desc: "Smooth, rich coffee blended with creamy milk for an easygoing classic." },
+          { name: "Classic Black Coffee", price: "90", tags: [], desc: "Bold, aromatic coffee served black for a clean and powerful caffeine kick." }]
+      },
+      {
+        id: "refreshers", title: "Refreshers", sub: "Cold & Fruity", items: [
+          { name: "Virgin Mojito", price: "170", tags: [], desc: "A refreshing blend of zesty lime, cool mint and sweetness, finished over ice." },
+          { name: "Strawberry Lemonade", price: "210", tags: [], desc: "Sweet strawberries meet tangy lemon for a bright, fruity refresher." },
+          { name: "Mint Lemonade", price: "210", tags: [], desc: "A crisp combination of fresh lemon and cooling mint, served ice cold." }]
+      },
+      {
+        id: "milkshakes", title: "Milkshakes", sub: "Thick & Creamy", items: [
+          { name: "Vanilla Milkshake", price: "220", tags: ["D"], desc: "Thick, creamy and smooth with the timeless sweetness of vanilla." },
+          { name: "Chocolate Milkshake", price: "220", tags: ["D"], desc: "Rich and indulgent chocolate blended into a thick, creamy shake." },
+          { name: "Strawberry Milkshake", price: "220", tags: ["D"], desc: "A creamy, fruity classic packed with sweet strawberry flavour." },
+          { name: "Oreo Milkshake", price: "280", tags: ["D", "G", "S"], desc: "A thick, indulgent shake blended with everyone's favourite chocolate sandwich cookies." }]
+      },
+      {
+        id: "lassi", title: "Lassi", sub: "Traditional Yogurt Drinks", items: [
+          { name: "Plain Lassi", price: "140", tags: ["D"], desc: "Cool, creamy and refreshing traditional yogurt drink with a smooth finish." },
+          { name: "Banana Lassi", price: "160", tags: ["D"], desc: "Creamy yogurt blended with ripe banana for a naturally sweet and filling refreshment." }]
+      },
+      {
+        id: "hot-drinks", title: "Hot Drinks", sub: "Warm & Comforting", items: [
+          { name: "Hot Lemon with Honey", price: "130", tags: [], desc: "Warm lemon and natural honey come together in a soothing, refreshing drink." },
+          { name: "Hot Chocolate", price: "130", tags: ["D"], desc: "Rich, velvety chocolate served warm for the ultimate comforting treat." }]
+      },
+      {
+        id: "iced-tea", title: "Iced Tea", sub: "Chilled", items: [
+          { name: "Peach Iced Tea", price: "180", tags: [], desc: "Refreshing iced tea infused with sweet, fragrant peach flavour." },
+          { name: "Apple Iced Tea", price: "180", tags: [], desc: "Crisp iced tea with a refreshing burst of sweet apple." },
+          { name: "Lemon Iced Tea", price: "180", tags: [], desc: "Classic chilled tea with a bright, tangy lemon finish." }]
+      },
+      {
+        id: "iced-coffee", title: "Iced Coffee", sub: "Chilled", items: [
+          { name: "Iced Americano", price: "110", tags: [], desc: "Bold espresso poured over ice and chilled water for a crisp, refreshing coffee." },
+          { name: "Iced Latte", price: "160", tags: ["D"], desc: "Smooth espresso and chilled milk served over ice for a creamy, mellow coffee." }]
+      },
     ];
 
     const root = document.getElementById("menuRoot"), navInner = document.getElementById("navInner");
@@ -782,6 +899,11 @@
       return `<li class="it"><div class="it-row"><span class="it-name">${it.name}<span class="it-tags">${tags}</span></span><span class="dots"></span><span class="pr">${it.price}</span></div>${it.desc ? `<div class="it-desc">${it.desc}</div>` : ""}</li>`;
     }
     MENU.forEach(sec => {
+      if (sec.drinksHeader) {
+        const dh = document.createElement("div"); dh.className = "drinks-head";
+        dh.innerHTML = `<div class="top-text">${sec.drinksHeader.eyebrow}</div><h2>DRINKS</h2><div class="sub-script">Playlist</div><div class="tagline-box"><svg class="inline-star"><use href="#ico-star"/></svg><span>${sec.drinksHeader.tagline}</span><svg class="inline-star"><use href="#ico-star"/></svg></div><div class="mini-vinyl"></div>`;
+        root.appendChild(dh);
+      }
       const btn = document.createElement("button"); btn.textContent = sec.title;
       btn.onclick = () => document.getElementById(sec.id).scrollIntoView({ behavior: "smooth", block: "start" });
       navInner.appendChild(btn);
