@@ -114,10 +114,10 @@
       display: block;
       margin: 0 auto 10px;
       width: 100px;
-      height: 100px;
-      color: var(--ink);
+      height: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
       opacity: 0.9;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12)) contrast(1.1);
     }
 
     .r-hero .top-text {
@@ -673,7 +673,7 @@
 
       .r-hero .logo-stencil {
         width: 80px;
-        height: 80px;
+        height: auto;
       }
 
       .r-item-name {
@@ -761,10 +761,8 @@
   <div class="frame">
 
     <header class="r-hero">
-      <a href="cassette-and-chiya-menu.html" class="back-link">Back to Menu</a>
-      <svg class="logo-stencil" style="color:var(--ink);">
-        <use href="#logo" />
-      </svg>
+      <a href="index.html" class="back-link">Back to Menu</a>
+      <img src="logo.png" alt="Cassette & Chiya" class="logo-stencil" />
       <div class="top-text">Cassette and Chiya</div>
       <h1>Leave a Review</h1>
       <div class="sub">Tell us what you thought</div>
