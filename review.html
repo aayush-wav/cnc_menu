@@ -322,11 +322,12 @@
 
     .r-item-name {
       font-family: 'Special Elite', monospace;
-      font-size: 13px;
+      font-size: 14px;
+      font-weight: 700;
       color: var(--ink);
       flex: 1;
       min-width: 0;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
     }
 
     /* Star rating */
@@ -453,6 +454,11 @@
       width: 14px;
       height: 14px;
       fill: currentColor;
+    }
+
+    .float-btn:disabled {
+      opacity: 0.6;
+      cursor: default;
     }
 
     .cnt {
@@ -599,7 +605,7 @@
       }
 
       .r-item-name {
-        font-size: 11.5px;
+        font-size: 12.5px;
       }
 
       .stars .s {
@@ -683,7 +689,7 @@
   <div class="frame">
 
     <header class="r-hero">
-      <a href="cassette-and-chiya-menu.html" class="back-link">Back to Menu</a>
+      <a href="index.html" class="back-link">Back to Menu</a>
       <svg class="logo-stencil" style="color:var(--ink);">
         <use href="#logo" />
       </svg>
@@ -772,6 +778,9 @@
       { id: "smoke-signals", title: "Smoke Signals", sub: "Hookah", items: [{ name: "Classic Hookah" }, { name: "Cloud Hookah" }, { name: "Cloud Hookah (Iced)" }] },
     ];
 
+    /* Paste the Web app URL from your Apps Script deployment here (ends in /exec) */
+    const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxgblcm3BZVvwnc1pC64DJeW9e_RJ1QMN93DPZ41rCWspkMP4gpzEFyGQJB_zhF6CkZ/exec";
+
     const reviews = {}; let idx = 0;
     const root = document.getElementById("reviewRoot");
 
@@ -814,7 +823,37 @@
     }
     function txt(name, v) { if (!reviews[name]) reviews[name] = { rating: 0, text: '' }; reviews[name].text = v; }
     function updCnt() { const n = Object.keys(reviews).filter(k => reviews[k].rating > 0).length; document.getElementById('cnt').textContent = n; const btn = document.getElementById('submitBtn'); if (n > 0) btn.classList.add('vis'); else btn.classList.remove('vis'); }
-    function doSubmit() { const rated = Object.entries(reviews).filter(([_, v]) => v.rating > 0); if (rated.length === 0) return; console.log('Submitted:', reviews); document.getElementById('overlay').classList.add('show'); }
+    function doSubmit() {
+      const rated = Object.entries(reviews).filter(([_, v]) => v.rating > 0);
+      if (rated.length === 0) return;
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = 'Sending&hellip;';
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        entries: rated.map(([name, v]) => ({ item: name, stars: v.rating, review: (v.text || '').trim() }))
+      };
+
+      fetch(WEBAPP_URL, {
+        method: 'POST',
+        mode: 'no-cors',            // Apps Script web apps don't return CORS headers;
+        headers: { 'Content-Type': 'text/plain' }, // text/plain avoids a CORS preflight
+        body: JSON.stringify(payload)
+      })
+        .then(() => {
+          // no-cors gives an opaque response, so we can't read success/failure directly -
+          // treat the fetch not throwing as success.
+          document.getElementById('overlay').classList.add('show');
+          btn.disabled = false; btn.innerHTML = originalHTML;
+        })
+        .catch(err => {
+          console.error('Review submit failed:', err);
+          btn.disabled = false; btn.innerHTML = originalHTML;
+          alert('Could not send your review — check your connection and try again.');
+        });
+    }
     document.getElementById('overlay').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('show'); });
   </script>
 </body>
