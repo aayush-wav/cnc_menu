@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Leave a Review — Cassette &amp; Chiya</title>
+  <meta name="description" content="Rate your food at Cassette and Chiya. Tap stars and drop your thoughts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Vollkorn:ital,wght@0,400;0,500;0,600;1,400&family=Courier+Prime:wght@400;700&family=Rye&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --paper: #CFC092;
+      --ink: #180C02;
+      --ink-mid: #352414;
+      --ink-soft: #5A462E;
+      --rust: #6E2818;
+      --gold: #886418;
+      --gold-b: #A88228;
+      --gold-hover: #C09830;
+      --tape: #0C0602;
+      --line: rgba(24, 12, 2, 0.32);
+      --star-off: rgba(24, 12, 2, 0.15);
+      --star-on: #A88228;
+      --max: 740px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: #1a1008;
+    }
+
+    body {
+      background-color: #1a1008;
+      color: var(--ink);
+      font-family: 'Vollkorn', Georgia, serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+
+    a {
+      color: inherit;
+    }
+
+    /* Frame */
+    .frame {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      background: var(--paper);
+      background-image: url('bg.png');
+      background-size: calc(100% + 60px) calc(100% + 60px);
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-blend-mode: darken;
+      min-height: 100vh;
+      padding-bottom: 100px;
+    }
+
+    @media(max-width:560px) {
+      .frame {
+        margin: 0;
+      }
+    }
+
+    /* SVG defs */
+    .svg-defs {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .r-hero {
+      text-align: center;
+      padding: 24px 20px 20px;
+      border-bottom: 3px solid var(--ink);
+      position: relative;
+    }
+
+    .back-link {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      font-family: 'Special Elite', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border: 2px solid var(--ink-soft);
+      padding: 4px 10px;
+      transition: all 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--rust);
+      border-color: var(--rust);
+    }
+
+    /* Vector logo stencil in header */
+    .r-hero .logo-stencil {
+      display: block;
+      margin: 0 auto 10px;
+      width: 100px;
+      height: 100px;
+      color: var(--ink);
+      opacity: 0.9;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12)) contrast(1.1);
+    }
+
+    .r-hero .top-text {
+      font-family: 'Special Elite', monospace;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    .r-hero h1 {
+      font-family: 'Rye', serif;
+      font-size: clamp(24px, 7vw, 40px);
+      line-height: 0.95;
+      letter-spacing: 0.03em;
+      margin: 4px 0 6px;
+      color: var(--ink);
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .r-hero .sub {
+      font-family: 'Special Elite', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+    }
+
+    .r-hero .tagline-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 2.5px solid var(--ink);
+      padding: 4px 16px;
+      margin: 10px auto 0;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .r-hero .tagline-box span {
+      font-family: 'Special Elite', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .inline-star {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      vertical-align: middle;
+      fill: var(--ink);
+    }
+
+    /* Instructions */
+    .r-instr {
+      text-align: center;
+      padding: 14px 20px;
+      border-bottom: 2px solid var(--line);
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .r-instr p {
+      font-family: 'Vollkorn', serif;
+      font-size: 13px;
+      color: var(--ink-soft);
+      font-style: italic;
+      line-height: 1.55;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .r-instr .demo {
+      margin-top: 6px;
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .r-instr .demo svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--gold-b);
+    }
+
+    /* Sections */
+    .r-sec {
+      padding: 20px 28px 6px;
+    }
+
+    @media(max-width:560px) {
+      .r-sec {
+        padding: 16px 14px 6px;
+      }
+    }
+
+    .cat-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 4px;
+      border-bottom: 3px solid var(--ink);
+    }
+
+    .cat-head h2 {
+      font-family: 'Rye', serif;
+      font-size: clamp(18px, 4.5vw, 26px);
+      letter-spacing: 0.03em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    .star-svg {
+      width: 13px;
+      height: 13px;
+      fill: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .cat-sub {
+      text-align: center;
+      margin: 5px 0 10px;
+    }
+
+    .cat-sub-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Special Elite', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .cat-sub-text::before,
+    .cat-sub-text::after {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .subcat {
+      font-family: 'Special Elite', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-align: center;
+      margin: 12px 0 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .subcat::before,
+    .subcat::after {
+      content: '\2014';
+      color: var(--ink-soft);
+      opacity: 0.4;
+    }
+
+    .sec-break {
+      border: none;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--ink-mid) 0px, var(--ink-mid) 4px, transparent 4px, transparent 8px);
+      margin: 6px 28px 0;
+      opacity: 0.25;
+    }
+
+    @media(max-width:560px) {
+      .sec-break {
+        margin: 6px 14px 0;
+      }
+    }
+
+    /* Review items */
+    .r-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .r-item {
+      padding: 7px 0;
+      border-bottom: 1px dotted var(--line);
+    }
+
+    .r-item:last-child {
+      border-bottom: none;
+    }
+
+    .r-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .r-item-name {
+      font-family: 'Special Elite', monospace;
+      font-size: 13px;
+      color: var(--ink);
+      flex: 1;
+      min-width: 0;
+      letter-spacing: 0.02em;
+    }
+
+    /* Star rating */
+    .stars {
+      display: inline-flex;
+      gap: 0;
+      flex-shrink: 0;
+      direction: rtl;
+    }
+
+    .stars .s {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      fill: var(--star-off);
+      transition: fill 0.12s, transform 0.12s;
+      padding: 1px;
+    }
+
+    .stars .s:hover,
+    .stars .s:hover~.s {
+      fill: var(--gold-hover);
+      transform: scale(1.15);
+    }
+
+    .stars .s.on {
+      fill: var(--star-on);
+    }
+
+    .stars .s.on:hover {
+      transform: scale(1.15);
+    }
+
+    /* Review input */
+    .r-input {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+      opacity: 0;
+      margin-top: 0;
+    }
+
+    .r-input.open {
+      max-height: 180px;
+      opacity: 1;
+      margin-top: 8px;
+    }
+
+    .r-lbl {
+      font-family: 'Special Elite', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      display: block;
+    }
+
+    .r-ta {
+      width: 100%;
+      min-height: 54px;
+      padding: 10px 12px;
+      font-family: 'Vollkorn', serif;
+      font-size: 13px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.25);
+      border: 2px solid var(--ink-mid);
+      border-radius: 0;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .r-ta::placeholder {
+      color: var(--ink-soft);
+      font-style: italic;
+      opacity: 0.5;
+    }
+
+    .r-ta:focus {
+      border-color: var(--gold);
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Floating submit */
+    .float-btn {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--tape);
+      color: var(--gold-b);
+      font-family: 'Rye', serif;
+      font-size: clamp(14px, 3.5vw, 20px);
+      letter-spacing: 0.06em;
+      padding: 13px 28px;
+      border: 3px solid var(--gold);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .float-btn.vis {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .float-btn:hover {
+      background: var(--rust);
+      border-color: var(--paper);
+      color: var(--paper);
+      transform: translateX(-50%) translate(-2px, -2px);
+      box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .float-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .cnt {
+      background: var(--rust);
+      color: var(--paper);
+      font-family: 'Courier Prime', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Success overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(12, 6, 2, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .o-card {
+      background: var(--paper);
+      border: 4px solid var(--gold);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.4);
+      padding: 34px 30px;
+      text-align: center;
+      max-width: 380px;
+      width: 90%;
+      transform: scale(0.9);
+      transition: transform 0.4s ease;
+    }
+
+    .overlay.show .o-card {
+      transform: scale(1);
+    }
+
+    .o-card .o-stars {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+
+    .o-card .o-stars svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--gold-b);
+    }
+
+    .o-card h2 {
+      font-family: 'Rye', serif;
+      font-size: 28px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .o-card p {
+      font-family: 'Vollkorn', serif;
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .o-card .o-btn {
+      display: inline-block;
+      background: var(--tape);
+      color: var(--gold-b);
+      font-family: 'Rye', serif;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      padding: 10px 24px;
+      border: 3px solid var(--gold);
+      text-decoration: none;
+      box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+      transition: all 0.2s;
+    }
+
+    .o-card .o-btn:hover {
+      background: var(--rust);
+      border-color: var(--paper);
+      color: var(--paper);
+    }
+
+    /* Footer */
+    footer {
+      padding: 16px 20px 22px;
+      text-align: center;
+      border-top: 3px solid var(--ink);
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    footer .f-name {
+      font-family: 'Special Elite', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    footer .f-slogan {
+      font-family: 'Rye', serif;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+
+    /* Print */
+    @media print {
+      .float-btn {
+        display: none;
+      }
+
+      .frame {
+        margin: 0;
+      }
+    }
+
+    /* Mobile */
+    @media(max-width:420px) {
+      .r-hero h1 {
+        font-size: 22px;
+      }
+
+      .r-hero .logo-stencil {
+        width: 80px;
+        height: 80px;
+      }
+
+      .r-item-name {
+        font-size: 11.5px;
+      }
+
+      .stars .s {
+        width: 20px;
+        height: 20px;
+      }
+
+      .float-btn {
+        padding: 11px 20px;
+        font-size: 13px;
+        bottom: 12px;
+      }
+
+      .back-link {
+        font-size: 9px;
+        padding: 3px 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- Distress removed, bg.png handles it -->
+
+
+  <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <symbol id="ico-star" viewBox="0 0 24 24">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
+      </symbol>
+      <!-- Logo stencil (same as menu page) -->
+      <symbol id="logo" viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="4" />
+        <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="2" />
+        <defs>
+          <path id="topArc" d="M 30,100 a 70,70 0 0,1 140,0" fill="none" />
+        </defs>
+        <text font-family="Bebas Neue,sans-serif" font-size="16" letter-spacing="5" fill="currentColor">
+          <textPath href="#topArc" startOffset="50%" text-anchor="middle">CASSETTE AND CHIYA</textPath>
+        </text>
+        <rect x="52" y="58" width="96" height="60" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" />
+        <rect x="64" y="64" width="72" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" />
+        <line x1="70" y1="72" x2="130" y2="72" stroke="currentColor" stroke-width="0.8" opacity="0.5" />
+        <line x1="70" y1="76" x2="130" y2="76" stroke="currentColor" stroke-width="0.8" opacity="0.5" />
+        <line x1="70" y1="80" x2="130" y2="80" stroke="currentColor" stroke-width="0.8" opacity="0.5" />
+        <circle cx="78" cy="102" r="12" fill="none" stroke="currentColor" stroke-width="2" />
+        <circle cx="78" cy="102" r="4" fill="currentColor" />
+        <line x1="78" y1="92" x2="78" y2="95" stroke="currentColor" stroke-width="1.5" />
+        <line x1="78" y1="109" x2="78" y2="112" stroke="currentColor" stroke-width="1.5" />
+        <line x1="68" y1="102" x2="71" y2="102" stroke="currentColor" stroke-width="1.5" />
+        <line x1="85" y1="102" x2="88" y2="102" stroke="currentColor" stroke-width="1.5" />
+        <circle cx="122" cy="102" r="12" fill="none" stroke="currentColor" stroke-width="2" />
+        <circle cx="122" cy="102" r="4" fill="currentColor" />
+        <line x1="122" y1="92" x2="122" y2="95" stroke="currentColor" stroke-width="1.5" />
+        <line x1="122" y1="109" x2="122" y2="112" stroke="currentColor" stroke-width="1.5" />
+        <line x1="112" y1="102" x2="115" y2="102" stroke="currentColor" stroke-width="1.5" />
+        <line x1="129" y1="102" x2="132" y2="102" stroke="currentColor" stroke-width="1.5" />
+        <path d="M90,102 Q100,108 110,102" fill="none" stroke="currentColor" stroke-width="1.5" />
+        <path d="M82,52 Q84,44 80,38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          opacity="0.7" />
+        <path d="M86,54 Q88,46 84,40 Q86,34 82,28" fill="none" stroke="currentColor" stroke-width="1.2"
+          stroke-linecap="round" opacity="0.5" />
+        <path d="M112,52 Q114,44 110,38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          opacity="0.7" />
+        <path d="M116,54 Q118,46 114,40 Q116,34 112,28" fill="none" stroke="currentColor" stroke-width="1.2"
+          stroke-linecap="round" opacity="0.5" />
+        <path d="M80,136 Q86,130 92,134 Q86,138 80,136Z" fill="currentColor" opacity="0.6" />
+        <path d="M90,138 Q96,132 102,136 Q96,140 90,138Z" fill="currentColor" opacity="0.6" />
+        <path d="M100,136 Q106,130 112,134 Q106,138 100,136Z" fill="currentColor" opacity="0.6" />
+        <path d="M108,138 Q114,132 120,136 Q114,140 108,138Z" fill="currentColor" opacity="0.6" />
+        <ellipse cx="88" cy="144" rx="3" ry="5" fill="currentColor" opacity="0.5" transform="rotate(-10,88,144)" />
+        <ellipse cx="100" cy="146" rx="3" ry="5" fill="currentColor" opacity="0.5" />
+        <ellipse cx="112" cy="144" rx="3" ry="5" fill="currentColor" opacity="0.5" transform="rotate(10,112,144)" />
+        <circle cx="100" cy="100" r="75" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="frame">
+
+    <header class="r-hero">
+      <a href="cassette-and-chiya-menu.html" class="back-link">Back to Menu</a>
+      <svg class="logo-stencil" style="color:var(--ink);">
+        <use href="#logo" />
+      </svg>
+      <div class="top-text">Cassette and Chiya</div>
+      <h1>Leave a Review</h1>
+      <div class="sub">Tell us what you thought</div>
+      <div class="tagline-box">
+        <svg class="inline-star">
+          <use href="#ico-star" />
+        </svg>
+        <span>Your Feedback Rocks</span>
+        <svg class="inline-star">
+          <use href="#ico-star" />
+        </svg>
+      </div>
+    </header>
+
+    <div class="r-instr">
+      <p>Tap the stars next to any dish you tried. Rate as many as you want and drop a note if you feel like it. Hit
+        submit when you are done.</p>
+      <div class="demo"><svg>
+          <use href="#ico-star" />
+        </svg><svg>
+          <use href="#ico-star" />
+        </svg><svg>
+          <use href="#ico-star" />
+        </svg><svg>
+          <use href="#ico-star" />
+        </svg><svg>
+          <use href="#ico-star" />
+        </svg></div>
+    </div>
+
+    <main id="reviewRoot"></main>
+
+    <footer>
+      <div class="f-name">Cassette &amp; Chiya</div>
+      <div class="f-slogan">Good Food. Good Times.</div>
+    </footer>
+
+  </div>
+
+  <button class="float-btn" id="submitBtn" onclick="doSubmit()">
+    <svg>
+      <use href="#ico-star" />
+    </svg>
+    Submit Review
+    <span class="cnt" id="cnt">0</span>
+  </button>
+
+  <div class="overlay" id="overlay">
+    <div class="o-card">
+      <div class="o-stars"><svg>
+          <use href="#ico-star" />
+        </svg><svg>
+          <use href="#ico-star" />
+        </svg><svg>
+          <use href="#ico-star" />
+        </svg><svg>
+          <use href="#ico-star" />
+        </svg><svg>
+          <use href="#ico-star" />
+        </svg></div>
+      <h2>Cheers!</h2>
+      <p>Your review just went through. We really appreciate you taking the time to let us know. It means a lot and
+        keeps us on our toes.</p>
+      <a href="cassette-and-chiya-menu.html" class="o-btn">Back to Menu</a>
+    </div>
+  </div>
+
+  <script>
+    const MENU = [
+      { id: "side-a", title: "Side A", sub: "Steamed, Fried & Pan-Tossed Momo", items: [{ name: "Steamed Momo" }, { name: "Fried Momo" }, { name: "Kothey Momo" }, { name: "Jhol Momo" }, { name: "Chilli Momo" }] },
+      { id: "now-playing", title: "Now Playing", sub: "Current Noodles", items: [{ name: "Plain Current" }, { name: "Egg Current" }, { name: "Egg & Sausage Current" }] },
+      { id: "flip-side", title: "Flip Side", sub: "Crispy Bites & Snacks", items: [{ name: "Chicken Strips" }, { name: "Chicken Sausage" }, { name: "Buff Sausage" }, { name: "Chicken Mushab" }, { name: "French Fries" }, { name: "Loaded Fries (Chicken)" }, { name: "Loaded Fries (Veg)" }, { name: "Paneer Crunchy" }, { name: "Mushroom Duplex" }, { name: "Potato Balls" }, { name: "Paneer Balls" }, { name: "Cheese Balls" }, { name: "Aloo Chop" }, { name: "Pakoda" }] },
+      { id: "house-hits", title: "House Hits", sub: "Signature Chicken", items: [{ name: "Chicken Broasted" }, { name: "Chicken Chilli" }, { name: "Chicken Sadeko" }, { name: "Akabare Wings" }, { name: "Honey BBQ Wings" }] },
+      { id: "heavy-rotation", title: "Heavy Rotation", sub: "Burgers", items: [{ name: "Chicken Crunchy Burger" }, { name: "Chicken Burger" }, { name: "Buff Burger" }] },
+      {
+        id: "b-sides", title: "B-Sides", sub: "Rice & Noodles", subCategories: [
+          { label: "Fried Rice", items: [{ name: "Chicken Fried Rice" }, { name: "Buff Fried Rice" }, { name: "Veg Fried Rice" }, { name: "Mixed Fried Rice" }] },
+          { label: "Chowmein", items: [{ name: "Chicken Chowmein" }, { name: "Buff Chowmein" }, { name: "Veg Chowmein" }, { name: "Mixed Chowmein" }] }]
+      },
+      { id: "track-list", title: "Track List", sub: "Wraps & Rolls", items: [{ name: "Chicken Shawarma" }, { name: "Chicken Fajita" }, { name: "Chicken Egg Roll" }] },
+      { id: "rewind", title: "Rewind", sub: "Sandwiches & Rice Bowls", items: [{ name: "Chicken Rice Bowl" }, { name: "Veg Rice Bowl" }, { name: "Grilled Chicken Sandwich" }, { name: "Veg Sandwich" }] },
+      { id: "mixtape", title: "Mixtape Snacks", sub: "Sadeko", items: [{ name: "Chicken Sandheko" }, { name: "Wai Wai Sandheko" }, { name: "Peanuts Sandheko" }, { name: "Mixed Sandheko" }] },
+      { id: "smoke-signals", title: "Smoke Signals", sub: "Hookah", items: [{ name: "Classic Hookah" }, { name: "Cloud Hookah" }, { name: "Cloud Hookah (Iced)" }] },
+    ];
+
+    const reviews = {}; let idx = 0;
+    const root = document.getElementById("reviewRoot");
+
+    function mkItem(item) {
+      const i = idx++; const id = `ri${i}`;
+      return `<li class="r-item" id="${id}">
+    <div class="r-item-row">
+      <span class="r-item-name">${item.name}</span>
+      <div class="stars" data-item="${item.name}" data-id="${id}">
+        ${[5, 4, 3, 2, 1].map(n => `<svg class="s" data-v="${n}" onclick="rate(this,${n})"><use href="#ico-star"/></svg>`).join('')}
+      </div>
+    </div>
+    <div class="r-input" id="${id}-box">
+      <label class="r-lbl" id="${id}-lbl"></label>
+      <textarea class="r-ta" placeholder="Got something to say about this one..." oninput="txt('${item.name.replace(/'/g, "\\'")}',this.value)"></textarea>
+    </div>
+  </li>`;
+    }
+
+    MENU.forEach(sec => {
+      const el = document.createElement("section"); el.className = "r-sec";
+      let h = `<div class="cat-head"><svg class="star-svg"><use href="#ico-star"/></svg><h2>${sec.title}</h2><svg class="star-svg"><use href="#ico-star"/></svg></div><div class="cat-sub"><span class="cat-sub-text">${sec.sub}</span></div>`;
+      if (sec.subCategories) { sec.subCategories.forEach(sc => { h += `<div class="subcat">${sc.label}</div><ul class="r-list">${sc.items.map(mkItem).join('')}</ul>`; }); }
+      else { h += `<ul class="r-list">${sec.items.map(mkItem).join('')}</ul>`; }
+      el.innerHTML = h; root.appendChild(el);
+      const br = document.createElement("hr"); br.className = "sec-break"; root.appendChild(br);
+    });
+
+    function rate(el, val) {
+      const box = el.parentElement; const name = box.dataset.item; const id = box.dataset.id;
+      const allS = box.querySelectorAll('.s'); const inputBox = document.getElementById(id + '-box'); const lbl = document.getElementById(id + '-lbl');
+      if (reviews[name] && reviews[name].rating === val) { delete reviews[name]; allS.forEach(s => s.classList.remove('on')); inputBox.classList.remove('open'); lbl.textContent = ''; updCnt(); return; }
+      const isNew = !reviews[name] || reviews[name].rating === 0;
+      if (!reviews[name]) reviews[name] = { rating: 0, text: '' }; reviews[name].rating = val;
+      allS.forEach(s => { s.classList.toggle('on', parseInt(s.dataset.v) <= val); });
+      inputBox.classList.add('open');
+      const w = ['', 'Not great', 'Could be better', 'Solid', 'Loved it', 'Absolutely killer'];
+      lbl.textContent = val + '/5 \u2014 ' + w[val];
+      if (isNew) updCnt();
+    }
+    function txt(name, v) { if (!reviews[name]) reviews[name] = { rating: 0, text: '' }; reviews[name].text = v; }
+    function updCnt() { const n = Object.keys(reviews).filter(k => reviews[k].rating > 0).length; document.getElementById('cnt').textContent = n; const btn = document.getElementById('submitBtn'); if (n > 0) btn.classList.add('vis'); else btn.classList.remove('vis'); }
+    function doSubmit() { const rated = Object.entries(reviews).filter(([_, v]) => v.rating > 0); if (rated.length === 0) return; console.log('Submitted:', reviews); document.getElementById('overlay').classList.add('show'); }
+    document.getElementById('overlay').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('show'); });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cassette &amp; Chiya — Food Playlist Menu</title>
+<meta name="description" content="Cassette and Chiya. Mom's Food, Dad's Playlist. The food playlist menu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Vollkorn:ital,wght@0,400;0,500;0,600;1,400&family=Courier+Prime:wght@400;700&family=Rye&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#CFC092;
+  --ink:#180C02;
+  --ink-mid:#352414;
+  --ink-soft:#5A462E;
+  --rust:#6E2818;
+  --gold:#886418;
+  --gold-b:#A88228;
+  --tape:#0C0602;
+  --line:rgba(24,12,2,0.32);
+  --max:740px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;background:#1a1008;}
+
+body{
+  background-color:#1a1008;
+  color:var(--ink);
+  font-family:'Vollkorn',Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+
+a{color:inherit;}
+
+/* ===== FRAME ===== */
+.menu-frame{
+  position:relative;z-index:1;max-width:var(--max);margin:0 auto;
+  background:var(--paper);
+  background-image:url('bg.png');
+  background-size:calc(100% + 60px) calc(100% + 60px);
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-blend-mode:darken;
+  min-height:100vh;
+}
+@media(max-width:560px){.menu-frame{margin:0;}}
+
+/* ===== NAV ===== */
+.navbar{position:sticky;top:0;z-index:50;background:var(--tape);border-bottom:3px solid var(--rust);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.navbar::-webkit-scrollbar{display:none;}
+.navbar-inner{display:flex;gap:0;padding:0 4px;}
+.navbar button{flex:0 0 auto;background:none;border:none;cursor:pointer;color:#A89070;font-family:'Special Elite',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:10px 9px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;}
+.navbar button:hover,.navbar button.active{color:#D8B850;border-bottom-color:var(--rust);}
+
+/* ===== HERO ===== */
+.hero{text-align:center;padding:28px 20px 22px;border-bottom:3px solid var(--ink);position:relative;}
+
+/* SVG Logo stencil */
+.logo-stencil{
+  display:block;margin:0 auto 12px;
+  width:140px;height:140px;
+  filter:
+    drop-shadow(0 2px 4px rgba(0,0,0,0.15))
+    contrast(1.1);
+  opacity:0.92;
+}
+
+
+.hero .top-text{font-family:'Special Elite',monospace;letter-spacing:0.35em;text-transform:uppercase;color:var(--ink);font-size:11px;margin-bottom:2px;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,16vw,100px);line-height:0.85;letter-spacing:0.03em;color:var(--ink);text-shadow:3px 3px 0 rgba(0,0,0,0.06);margin:0;}
+.hero .playlist-text{font-family:'Rye',serif;font-size:clamp(32px,9vw,54px);color:var(--ink);letter-spacing:0.06em;line-height:1;margin-bottom:8px;text-shadow:2px 2px 0 rgba(0,0,0,0.05);}
+.hero .tagline-box{display:inline-flex;align-items:center;gap:10px;border:2.5px solid var(--ink);padding:4px 18px;background:rgba(0,0,0,0.04);}
+.hero .tagline-box span{font-family:'Special Elite',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);}
+.inline-star{display:inline-block;width:12px;height:12px;vertical-align:middle;fill:var(--ink);}
+
+/* Small vinyl circle */
+.vinyl-icon{display:block;margin:14px auto 0;width:30px;height:30px;border:2.5px solid var(--ink);border-radius:50%;background:radial-gradient(circle,var(--ink) 3.5px,transparent 3.5px,transparent 5.5px,var(--ink-mid) 5.5px,var(--ink-mid) 6.5px,transparent 6.5px);}
+
+/* ===== BAR DIVIDER ===== */
+.bar-div{display:flex;align-items:center;justify-content:center;padding:12px 16px;background:transparent;color:var(--ink);font-family:'Special Elite',monospace;font-size:11.5px;letter-spacing:0.35em;text-transform:uppercase;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:15px 20px;}
+@media(max-width:560px){.bar-div{margin:15px 14px;}}
+
+/* ===== SECTIONS ===== */
+.page{padding:22px 28px 6px;}
+@media(max-width:560px){.page{padding:18px 14px 6px;}}
+
+.cat-head{display:flex;align-items:center;gap:8px;padding-bottom:4px;border-bottom:3px solid var(--ink);}
+.cat-head h2{font-family:'Rye',serif;font-size:clamp(20px,5.5vw,30px);letter-spacing:0.03em;color:var(--ink);text-transform:uppercase;}
+.star-svg{width:14px;height:14px;fill:var(--ink);flex-shrink:0;}
+
+.cat-sub{text-align:center;margin:5px 0 3px;}
+.cat-sub-text{display:inline-flex;align-items:center;gap:8px;font-family:'Special Elite',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);}
+.cat-sub-text::before,.cat-sub-text::after{content:'';width:35px;height:1px;background:var(--line);}
+.sec-note{font-size:11px;color:var(--ink-soft);font-style:italic;margin:2px 0 10px;text-align:center;}
+
+/* ===== ITEMS ===== */
+.items{list-style:none;padding:0;margin:6px 0 0;}
+.it{margin-bottom:5px;}
+.it-row{display:flex;align-items:baseline;gap:3px;}
+.it-name{font-family:'Special Elite',monospace;font-size:13.5px;color:var(--ink);white-space:nowrap;flex-shrink:0;letter-spacing:0.02em;}
+.it-tags{display:inline-flex;gap:2px;margin-left:3px;vertical-align:1px;flex-shrink:0;}
+.it-tag{font-family:'Courier Prime',monospace;font-size:7px;font-weight:700;color:var(--rust);border:1px solid var(--rust);border-radius:50%;width:12px;height:12px;display:inline-flex;align-items:center;justify-content:center;}
+.dots{flex:1;border-bottom:2px dotted var(--ink-mid);margin:0 4px;min-width:14px;align-self:baseline;margin-bottom:3px;opacity:0.40;}
+.pr{font-family:'Courier Prime',monospace;font-weight:700;font-size:13px;color:var(--ink);white-space:nowrap;flex-shrink:0;}
+
+.subcat{font-family:'Special Elite',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-mid);text-align:center;margin:14px 0 8px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.subcat::before,.subcat::after{content:'\2014';color:var(--ink-soft);opacity:0.4;}
+
+.sec-line{border:none;height:2px;background:repeating-linear-gradient(90deg,var(--ink-mid) 0px,var(--ink-mid) 4px,transparent 4px,transparent 8px);margin:8px 28px 0;opacity:0.25;}
+@media(max-width:560px){.sec-line{margin:8px 14px 0;}}
+
+/* ===== ALLERGENS ===== */
+.legend-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 16px;margin-top:8px;}
+@media(max-width:560px){.legend-grid{grid-template-columns:1fr;}}
+.legend-row{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink-soft);}
+.allergen-box{margin-top:16px;padding:12px 14px;border:2px solid var(--ink);border-left:5px solid var(--rust);font-size:11.5px;line-height:1.5;color:var(--ink);background:rgba(0,0,0,0.02);}
+.allergen-box strong{font-family:'Special Elite',monospace;font-size:10px;letter-spacing:0.1em;color:var(--rust);text-transform:uppercase;display:block;margin-bottom:4px;}
+
+/* ===== REVIEW CTA ===== */
+.review-cta{text-align:center;padding:28px 20px 12px;}
+.review-btn{display:inline-flex;align-items:center;gap:12px;background:var(--tape);color:var(--gold-b);font-family:'Rye',serif;font-size:clamp(16px,4.5vw,24px);letter-spacing:0.06em;text-decoration:none;padding:14px 36px;border:3px solid var(--gold);cursor:pointer;transition:all 0.3s ease;box-shadow:4px 4px 0 rgba(0,0,0,0.2);}
+.review-btn:hover{background:var(--rust);border-color:var(--paper);color:var(--paper);transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(0,0,0,0.25);}
+
+/* ===== FOOTER ===== */
+footer{padding:18px 20px 24px;text-align:center;border-top:3px solid var(--ink);background:rgba(0,0,0,0.02);}
+footer .f-name{font-family:'Special Elite',monospace;font-size:10px;letter-spacing:0.2em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:4px;}
+footer .f-slogan{font-family:'Rye',serif;font-size:18px;letter-spacing:0.06em;color:var(--ink);}
+
+/* ===== PRINT ===== */
+@media print{.navbar,.review-cta{display:none;}.menu-frame{margin:0;}}
+
+/* ===== MOBILE ===== */
+@media(max-width:420px){
+  .hero h1{font-size:50px;}
+  .hero .playlist-text{font-size:28px;}
+  .logo-stencil{width:110px;height:110px;}
+  .it-name{font-size:12px;}
+  .pr{font-size:11.5px;}
+  .cat-head h2{font-size:18px;}
+  .review-btn{padding:12px 24px;font-size:15px;}
+}
+</style>
+</head>
+<body>
+
+
+
+<!-- SVG defs -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;">
+<defs>
+  <symbol id="ico-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"/></symbol>
+  <!-- CASSETTE & CHIYA Logo — vectorized stencil -->
+  <symbol id="logo" viewBox="0 0 200 200">
+    <!-- Outer ring -->
+    <circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width="4"/>
+    <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="2"/>
+    <!-- Curved text path -->
+    <defs>
+      <path id="topArc" d="M 30,100 a 70,70 0 0,1 140,0" fill="none"/>
+      <path id="botArc" d="M 170,108 a 70,70 0 0,1 -140,0" fill="none"/>
+    </defs>
+    <text font-family="Bebas Neue,sans-serif" font-size="16" letter-spacing="5" fill="currentColor">
+      <textPath href="#topArc" startOffset="50%" text-anchor="middle">CASSETTE AND CHIYA</textPath>
+    </text>
+    <!-- Cassette body -->
+    <rect x="52" y="58" width="96" height="60" rx="6" fill="none" stroke="currentColor" stroke-width="2.5"/>
+    <!-- Label window -->
+    <rect x="64" y="64" width="72" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <!-- Horizontal lines in label -->
+    <line x1="70" y1="72" x2="130" y2="72" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+    <line x1="70" y1="76" x2="130" y2="76" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+    <line x1="70" y1="80" x2="130" y2="80" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+    <!-- Left reel -->
+    <circle cx="78" cy="102" r="12" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="78" cy="102" r="4" fill="currentColor"/>
+    <!-- Reel spokes left -->
+    <line x1="78" y1="92" x2="78" y2="95" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="78" y1="109" x2="78" y2="112" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="68" y1="102" x2="71" y2="102" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="85" y1="102" x2="88" y2="102" stroke="currentColor" stroke-width="1.5"/>
+    <!-- Right reel -->
+    <circle cx="122" cy="102" r="12" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="122" cy="102" r="4" fill="currentColor"/>
+    <!-- Reel spokes right -->
+    <line x1="122" y1="92" x2="122" y2="95" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="122" y1="109" x2="122" y2="112" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="112" y1="102" x2="115" y2="102" stroke="currentColor" stroke-width="1.5"/>
+    <line x1="129" y1="102" x2="132" y2="102" stroke="currentColor" stroke-width="1.5"/>
+    <!-- Tape between reels -->
+    <path d="M90,102 Q100,108 110,102" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    <!-- Steam wisps -->
+    <path d="M82,52 Q84,44 80,38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M86,54 Q88,46 84,40 Q86,34 82,28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+    <path d="M112,52 Q114,44 110,38" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M116,54 Q118,46 114,40 Q116,34 112,28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+    <!-- Tea leaves at bottom -->
+    <path d="M80,136 Q86,130 92,134 Q86,138 80,136Z" fill="currentColor" opacity="0.6"/>
+    <path d="M90,138 Q96,132 102,136 Q96,140 90,138Z" fill="currentColor" opacity="0.6"/>
+    <path d="M100,136 Q106,130 112,134 Q106,138 100,136Z" fill="currentColor" opacity="0.6"/>
+    <path d="M108,138 Q114,132 120,136 Q114,140 108,138Z" fill="currentColor" opacity="0.6"/>
+    <!-- Cardamom pods -->
+    <ellipse cx="88" cy="144" rx="3" ry="5" fill="currentColor" opacity="0.5" transform="rotate(-10,88,144)"/>
+    <ellipse cx="100" cy="146" rx="3" ry="5" fill="currentColor" opacity="0.5"/>
+    <ellipse cx="112" cy="144" rx="3" ry="5" fill="currentColor" opacity="0.5" transform="rotate(10,112,144)"/>
+    <!-- Inner decorative ring -->
+    <circle cx="100" cy="100" r="75" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+  </symbol>
+</defs>
+</svg>
+
+<div class="menu-frame">
+
+<nav class="navbar"><div class="navbar-inner" id="navInner"></div></nav>
+
+<header class="hero">
+
+
+  <!-- Vector stencil logo -->
+  <svg class="logo-stencil" style="color:var(--ink);"><use href="#logo"/></svg>
+
+  <div class="top-text">Cassette and Chiya</div>
+  <h1>FOOD</h1>
+  <div class="playlist-text">Playlist</div>
+
+  <div class="tagline-box">
+    <svg class="inline-star"><use href="#ico-star"/></svg>
+    <span>Mom's Food &bull; Dad's Playlist</span>
+    <svg class="inline-star"><use href="#ico-star"/></svg>
+  </div>
+  <div class="vinyl-icon"></div>
+</header>
+
+<div class="bar-div">
+  <span>Good Food. Good Times.</span>
+</div>
+
+<main id="menuRoot"></main>
+
+<div class="review-cta">
+  <a href="review.html" class="review-btn">
+    <svg class="inline-star"><use href="#ico-star"/></svg>
+    Leave a Review
+    <svg class="inline-star"><use href="#ico-star"/></svg>
+  </a>
+</div>
+
+<footer>
+  <div class="f-name">Cassette &amp; Chiya</div>
+  <div class="f-slogan">Good Food. Good Times.</div>
+</footer>
+
+</div>
+
+<script>
+const ALLERGENS={G:"Gluten (wheat)",E:"Egg",D:"Dairy (milk)",S:"Soy",Se:"Sesame",Mu:"Mustard",Pn:"Peanuts",F:"Fish",Mo:"Molluscs (oyster)",Su:"Sulphites"};
+const MENU=[
+  {id:"side-a",title:"Side A",sub:"Steamed, Fried & Pan-Tossed Momo",note:"All momos come with house chutney. C = Chicken, B = Buff, V = Veg.",items:[
+    {name:"Steamed Momo (C/B/V)",price:"200/190/180",tags:["G","S"]},{name:"Fried Momo (C/B/V)",price:"240/220/200",tags:["G","S"]},{name:"Kothey Momo (C/B/V)",price:"240/220/200",tags:["G","S","D"]},{name:"Jhol Momo (C/B/V)",price:"250/230/200",tags:["G","S","D"]},{name:"Chilli Momo (C/B/V)",price:"250/230/200",tags:["G","S"]}]},
+  {id:"now-playing",title:"Now Playing",sub:"Current Noodles",items:[
+    {name:"Plain Current",price:"120",tags:["G","S"]},{name:"Egg Current",price:"150",tags:["G","S","E"]},{name:"Egg & Sausage Current",price:"180",tags:["G","S","E","Su"]}]},
+  {id:"flip-side",title:"Flip Side",sub:"Crispy Bites & Snacks",items:[
+    {name:"Chicken Strips",price:"290",tags:["G","S"]},{name:"Chicken Sausage",price:"260",tags:["G","Su"]},{name:"Buff Sausage",price:"250",tags:["G","Su"]},{name:"Chicken Mushab",price:"240",tags:["S"]},{name:"French Fries",price:"150",tags:["G"]},{name:"Loaded Fries (Chicken)",price:"250",tags:["G","D"]},{name:"Loaded Fries (Veg)",price:"200",tags:["G","D"]},{name:"Paneer Crunchy",price:"260",tags:["D"]},{name:"Mushroom Duplex",price:"220",tags:["D"]},{name:"Potato Balls",price:"180",tags:["S"]},{name:"Paneer Balls",price:"210",tags:["D"]},{name:"Cheese Balls",price:"330",tags:["D"]},{name:"Aloo Chop",price:"110",tags:["G"]},{name:"Pakoda",price:"110",tags:["G"]}]},
+  {id:"house-hits",title:"House Hits",sub:"Signature Chicken",items:[
+    {name:"Chicken Broasted",price:"600",tags:["G"]},{name:"Chicken Chilli",price:"290",tags:["S","Mo"]},{name:"Chicken Sadeko",price:"270",tags:[]},{name:"Akabare Wings",price:"300",tags:["D"]},{name:"Honey BBQ Wings",price:"350",tags:["Su"]}]},
+  {id:"heavy-rotation",title:"Heavy Rotation",sub:"Burgers",items:[
+    {name:"Chicken Crunchy Burger",price:"270",tags:["G","E","D"]},{name:"Chicken Burger",price:"250",tags:["G","E"]},{name:"Buff Burger",price:"240",tags:["G","E"]}]},
+  {id:"b-sides",title:"B-Sides",sub:"Rice & Noodles",subCategories:[
+    {label:"Fried Rice",items:[{name:"Chicken",price:"200",tags:["E","S"]},{name:"Buff",price:"190",tags:["E","S"]},{name:"Veg",price:"170",tags:["E","S"]},{name:"Mixed",price:"120",tags:["E","S"]}]},
+    {label:"Chowmein",items:[{name:"Chicken",price:"200",tags:["G","S"]},{name:"Buff",price:"190",tags:["G","S"]},{name:"Veg",price:"170",tags:["G","S"]},{name:"Mixed",price:"220",tags:["G","S"]}]}]},
+  {id:"track-list",title:"Track List",sub:"Wraps & Rolls",items:[
+    {name:"Chicken Shawarma",price:"295",tags:["G","D","E"]},{name:"Chicken Fajita",price:"275",tags:["G","D"]},{name:"Chicken Egg Roll",price:"220",tags:["G","E","D"]}]},
+  {id:"rewind",title:"Rewind",sub:"Sandwiches & Rice Bowls",items:[
+    {name:"Chicken Rice Bowl",price:"310",tags:["S"]},{name:"Veg Rice Bowl",price:"250",tags:[]},{name:"Grilled Chicken Sandwich",price:"240",tags:["G","E","D"]},{name:"Veg Sandwich",price:"210",tags:["G","E","D"]}]},
+  {id:"mixtape",title:"Mixtape Snacks",sub:"Sadeko",items:[
+    {name:"Chicken Sandheko",price:"270",tags:[]},{name:"Wai Wai Sandheko",price:"120",tags:["G","Mu"]},{name:"Peanuts Sandheko",price:"140",tags:["Pn"]},{name:"Mixed (Waiwai & Peanut)",price:"160",tags:["G","Mu","Pn"]}]},
+  {id:"smoke-signals",title:"Smoke Signals",sub:"Hookah",items:[
+    {name:"Classic Hookah",price:"350",tags:[]},{name:"Cloud Hookah",price:"550",tags:[]},{name:"Cloud Hookah (Iced)",price:"600",tags:[]},{name:"Extra Coil",price:"50",tags:[]}]},
+];
+
+const root=document.getElementById("menuRoot"),navInner=document.getElementById("navInner");
+function mkItem(it){
+  const tags=(it.tags||[]).map(c=>`<span class="it-tag" title="${ALLERGENS[c]||c}">${c}</span>`).join("");
+  return `<li class="it"><div class="it-row"><span class="it-name">${it.name}<span class="it-tags">${tags}</span></span><span class="dots"></span><span class="pr">${it.price}</span></div></li>`;
+}
+MENU.forEach(sec=>{
+  const btn=document.createElement("button");btn.textContent=sec.title;
+  btn.onclick=()=>document.getElementById(sec.id).scrollIntoView({behavior:"smooth",block:"start"});
+  navInner.appendChild(btn);
+  const pg=document.createElement("section");pg.className="page";pg.id=sec.id;
+  pg.innerHTML=`<div class="cat-head"><svg class="star-svg"><use href="#ico-star"/></svg><h2>${sec.title}</h2><svg class="star-svg"><use href="#ico-star"/></svg></div><div class="cat-sub"><span class="cat-sub-text">${sec.sub}</span></div>${sec.note?`<p class="sec-note">${sec.note}</p>`:""}`;
+  if(sec.subCategories){sec.subCategories.forEach(sc=>{pg.innerHTML+=`<div class="subcat">${sc.label}</div><ul class="items">${sc.items.map(mkItem).join("")}</ul>`;});}
+  else{pg.innerHTML+=`<ul class="items">${sec.items.map(mkItem).join("")}</ul>`;}
+  root.appendChild(pg);
+  const hr=document.createElement("hr");hr.className="sec-line";root.appendChild(hr);
+});
+/* Allergens */
+const lp=document.createElement("section");lp.className="page";lp.id="allergens";
+lp.innerHTML=`<div class="cat-head"><svg class="star-svg"><use href="#ico-star"/></svg><h2>Liner Notes</h2><svg class="star-svg"><use href="#ico-star"/></svg></div><div class="cat-sub"><span class="cat-sub-text">Allergen Key</span></div><div class="legend-grid" id="lg"></div><div class="allergen-box"><strong>Allergen Notice</strong>Everything is made in a shared kitchen so cross contact with allergens can happen. Let our staff know about any food allergies before you order.</div>`;
+root.appendChild(lp);
+Object.entries(ALLERGENS).forEach(([c,l])=>{const r=document.createElement("div");r.className="legend-row";r.innerHTML=`<span class="it-tag">${c}</span><span>${l}</span>`;document.getElementById("lg").appendChild(r);});
+/* Nav highlight */
+const navBtns=Array.from(navInner.children),secs=MENU.map(s=>document.getElementById(s.id));
+window.addEventListener("scroll",()=>{let idx=0;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top-90<=0)idx=i;});navBtns.forEach(b=>b.classList.remove("active"));if(navBtns[idx])navBtns[idx].classList.add("active");},{passive:true});
+</script>
+</body>
+</html>
